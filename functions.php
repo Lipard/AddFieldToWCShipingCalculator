@@ -7,6 +7,9 @@ function codigoverso_update_shipping_address() {
     if(isset($_POST['calc_shipping_address'])) {
         $address = sanitize_text_field($_POST['calc_shipping_address']);
         WC()->session->set('shipping_address_1', $address);
+        //Añadimos esta linea si no aparece en la dirección de address en la linea superior de la calculadora cuando actualizamos la dirección de envio.
+        $customer = WC()->customer;
+        $customer->set_shipping_address_1($address);
     }
 }
 add_action('woocommerce_calculated_shipping', 'codigoverso_update_shipping_address');
